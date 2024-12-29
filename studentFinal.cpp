@@ -724,89 +724,109 @@ void update(Student stud)
 
 void Search(Student stud)
 {
-    fstream file, file1;
-
+    fstream file;
     file.open("student.txt", ios::in);
-    string Id;
-    bool check3 = false;
+    string Id, Name;
+    bool found = false;
 
     if (!file)
     {
         cout << "File couldn't open...";
+        return;
+    }
+
+    // Let the user choose the search criterion
+    int searchOption;
+    cout << "Search by:\n1. ID\n2. Name\nEnter your choice (1 or 2): ";
+    cin >> searchOption;
+
+    if (searchOption == 1)
+    {
+        cout << "Enter the ID number to search: ";
+        cin >> Id;
+    }
+    else if (searchOption == 2)
+    {
+        cout << "Enter the Name to search: ";
+        cin.ignore(); // To handle any leftover newline characters
+        getline(cin, Name);
     }
     else
     {
-
-        cout << "Enter the Id number to search: ";
-        cin >> Id;
-        cout << left << setw(32) << "NAME" << left << setw(15) << "ID" << left << setw(15) << "SEX"
-             << left << setw(15) << "AGE" << left << setw(15) << "ADDRESS" << left << setw(15) << "GRADE"
-             << left << setw(15) << "STATUS(pass/fail)\n"
-             << "***************************************************************************"
-                "**************************************************"
-             << endl
-             << endl;
-        string line, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11;
-        while (file.good())
-        {
-            while (getline(file, line))
-            {
-                stringstream ss(line);
-                getline(ss, stud.full_name, ',');
-                getline(ss, temp1, ','); // id
-                getline(ss, temp2, ','); // sex
-
-                getline(ss, temp3, ','); // age
-
-                getline(ss, temp4, ',');  // address
-                getline(ss, temp5, ',');  // cgp
-                getline(ss, temp6, ',');  // status
-                getline(ss, temp7, ',');  // FII
-                getline(ss, temp8, ',');  // DT
-                getline(ss, temp9, ',');  // STAT
-                getline(ss, temp10, ','); // DB
-                getline(ss, temp11, ','); // DL
-
-                if (temp1 == Id)
-                {
-                    cout << left << setw(32) << stud.full_name << left << setw(15) << temp1 << left << setw(15) << temp2
-                         << left << setw(15) << temp3 << left << setw(15) << temp4 << left << setw(15) << temp5
-                         << left << setw(15) << temp6 << endl
-                         << endl;
-
-                    // further info
-                    // taken courses :>> FII, DT, STAT, DB, DL;
-                    cout << endl
-                         << endl;
-                    cout << "Result of each subject out of 100\n"
-                            "####################################"
-                         << endl
-                         << endl;
-                    // cout<<"____________________________________"<<endl;
-                    cout << left << setw(32) << "Fundamental of Programming" << left << setw(20) << "Data Communication"
-                         << left << setw(20) << "Statistics" << left << setw(20) << "Database" << left << setw(20) << "Digital Logic"
-                                                                                                                      "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-                                                                                                                      "~~~~~~~~~~~~~~~~~~~"
-                         << endl
-                         << endl;
-
-                    cout << left << setw(32) << temp7 << left << setw(20) << temp8 << left << setw(20) << temp9
-                         << left << setw(20) << temp10 << left << setw(20) << temp11 << endl
-                         << endl;
-
-                    check3 = true;
-                }
-            }
-            if (!check3) // to check either the data is found or not
-            {
-                cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
-                cout << "\n\aSorry, your request is unsuccessful!\n";
-                cout << "\nId number " << Id << " is not found in the list!\n";
-            }
-        }
-        file.close();
+        cout << "Invalid choice!";
+        return;
     }
+
+    // Display header
+    cout << left << setw(32) << "NAME" << left << setw(15) << "ID" << left << setw(15) << "SEX"
+         << left << setw(15) << "AGE" << left << setw(15) << "ADDRESS" << left << setw(15) << "GRADE"
+         << left << setw(15) << "STATUS(pass/fail)\n"
+         << "***************************************************************************"
+            "**************************************************"
+         << endl
+         << endl;
+
+    // Read file line by line
+    string line, temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11;
+    while (getline(file, line))
+    {
+        stringstream ss(line);
+        getline(ss, stud.full_name, ','); // Name
+        getline(ss, temp1, ',');          // ID
+        getline(ss, temp2, ',');          // Sex
+        getline(ss, temp3, ',');          // Age
+        getline(ss, temp4, ',');          // Address
+        getline(ss, temp5, ',');          // CGP
+        getline(ss, temp6, ',');          // Status
+        getline(ss, temp7, ',');          // FII
+        getline(ss, temp8, ',');          // DT
+        getline(ss, temp9, ',');          // STAT
+        getline(ss, temp10, ',');         // DB
+        getline(ss, temp11, ',');         // DL
+
+        // Search logic based on the chosen criterion
+        if ((searchOption == 1 && temp1 == Id) || (searchOption == 2 && stud.full_name == Name))
+        {
+            cout << left << setw(32) << stud.full_name << left << setw(15) << temp1 << left << setw(15) << temp2
+                 << left << setw(15) << temp3 << left << setw(15) << temp4 << left << setw(15) << temp5
+                 << left << setw(15) << temp6 << endl
+                 << endl;
+
+            // Display further info
+            cout << "\nResult of each subject out of 100\n"
+                    "####################################"
+                 << endl
+                 << endl;
+            cout << left << setw(32) << "Fundamental of Programming" << left << setw(20) << "Data Communication"
+                 << left << setw(20) << "Statistics" << left << setw(20) << "Database" << left << setw(20) << "Digital Logic"
+                 << "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                    "~~~~~~~~~~~~~~~~~~~"
+                 << endl
+                 << endl;
+            cout << left << setw(32) << temp7 << left << setw(20) << temp8 << left << setw(20) << temp9
+                 << left << setw(20) << temp10 << left << setw(20) << temp11 << endl
+                 << endl;
+
+            found = true;
+            break; // Exit loop after finding a match
+        }
+    }
+
+    // If no match was found
+    if (!found)
+    {
+        cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+        cout << "\n\aSorry, your request is unsuccessful!\n";
+        if (searchOption == 1)
+            cout << "\nID number " << Id << " is not found in the list!\n";
+        else
+            cout << "\nName \"" << Name << "\" is not found in the list!\n";
+    }
+
+    file.close();
 }
+
+
 
 // grade culculator
 string grade_cul(float mark)
@@ -988,13 +1008,13 @@ void statstics(Student *stud)
 
         // passed students in percent
         percent_passed = (((nopass + nopass_with_warning) * 100)) / total_student;
-        percent = std::to_string(percent_passed) + "%"; // cast float to string then concatenate with % symbol
-        percentage = "";
+//        percent = std::to_string(percent_passed) + "%"; // cast float to string then concatenate with % symbol
+//        percentage = "";
         for (int i = 0; i < 5; i++)
         {
             percentage += percent[i];
         }
-        percentage += "%";
+//        percentage += "%";
     }
     // Displayed informations or statistics
     cout << left << setw(30) << "STUDENTS STATISTICS INFO" << left << setw(30) << "QUANTITY\n"

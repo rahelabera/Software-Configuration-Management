@@ -67,7 +67,7 @@ void menu();
 void login();
 void aboutUs();
 void contactUs();
-
+void generateCSV();
 int main()
 {
     cout << "\n\n\n                                WElcome to Student Recored Management System!"
@@ -98,12 +98,13 @@ menustart:
     cout << "\t\t\t2. Display Record\n"; // we can add \a to add some sound here
     cout << "\t\t\t3. Modify Record\n";
     cout << "\t\t\t4. Delete Record\n";
-    cout << "\t\t\t5. Search Record\n";
-    cout << "\t\t\t6. Rank of students (Based on their CGP descending order)\n";
+    cout << "\t\t\t5. Search Record-------------(Modified Feature)\n";
+    cout << "\t\t\t6. Rank of students\n";
     cout << "\t\t\t7. Statistics \n";
-    cout << "\t\t\t8. To see about course details\n";
-    cout << "\t\t\t9. About Us \n";
-    cout << "\t\t\t10.Contact Us \n";
+    cout << "\t\t\t8. Generate CSV file-----------(New Feature) \n";
+    cout << "\t\t\t9. To see about course details\n";
+    cout << "\t\t\t10. About Us \n";
+    cout << "\t\t\t11.Contact Us \n";
     cout << "\t\t\t-1.Exit \n";
     cout << "\t\t\tchoice option:[ 1/2/3/4/5/6/7/8/9/10/-1 ]\n";
     cout << "\t\t\tEnter your choice: \n";
@@ -137,12 +138,16 @@ menustart:
         statstics(stud);
         break;
     case 8:
-        course_Dtails();
+        generateCSV();
+        cout << "CSV file 'students.csv' has been created." << endl;
         break;
     case 9:
-        aboutUs();
+        course_Dtails();
         break;
     case 10:
+        aboutUs();
+        break;
+    case 11:
         contactUs();
         break;
     case -1:
@@ -409,6 +414,34 @@ void dataDisp()
                  << endl;
         }
         InFile.close();
+    }
+}
+
+void generateCSV() {
+    fstream InFile;
+    InFile.open("student.txt", ios::in);
+    fstream OutFile;
+    OutFile.open("students.csv", ios::out);
+
+    if (!InFile) {
+        cout << "!Sorry, the file could not be opened....";
+    } else {
+        OutFile << "NAME,ID,SEX,AGE,ADDRESS,GRADE,STATUS(pass/fail)" << endl; // Writing CSV header
+
+        string line, temp1, temp2, temp3, temp4, temp5, temp6;
+        while (getline(InFile, line)) {
+            stringstream ss(line);
+            getline(ss, temp1, ',');
+            getline(ss, temp2, ',');
+            getline(ss, temp3, ',');
+            getline(ss, temp4, ',');
+            getline(ss, temp5, ',');
+            getline(ss, temp6, ',');
+
+            OutFile << temp1 << "," << temp2 << "," << temp3 << "," << temp4 << "," << temp5 << "," << temp6 << endl;
+        }
+        InFile.close();
+        OutFile.close();
     }
 }
 
@@ -1051,13 +1084,12 @@ void login()
     char pass[10] = "1234";
     do
     {
+        cout << "\n                \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\x20"
+			 << " LOGIN FIRST  \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\x20  \n";
+		cout << "\n\n                                 ENTER USERNAME:=";
+		cin.getline(uname, 10);
+		cout << "\n\n                                 ENTER PASSWORD:=";
 
-        cout << "\n                \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\ "
-             << " LOGIN FIRST  \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\  \n";
-        cout << " \n\n                                 ENTER USERNAME:=";
-        // getline(cin, uname);
-        cin.getline(uname, 10);
-        cout << " \n\n                                 ENTER PASSWORD:=";
         while (i < 10)
         {
             pword[i] = getch();
@@ -1123,11 +1155,11 @@ void aboutUs()
     cout << "****                                                                                ****\n";
     cout << "****  Members                                                                       ****\n";
     cout << "****  No_    Name                                          Id                       ****\n";
-    cout << "****  1.    Agumass Dessalewu                            ETS0076/13                 ****\n";
-    cout << "****  2.    Agumass Dessalewu                            ETS0076/13                 ****\n";
-    cout << "****  3.    Agumass Dessalewu                            ETS0076/13                 ****\n";
-    cout << "****  4.    Agumass Dessalewu                            ETS0076/13                 ****\n";
-    cout << "****  5.    Agumass Dessalewu                            ETS0076/13                 ****\n";
+    cout << "****  1.    Agumas Desalew                                 ETS1559/13               ****\n";
+    cout << "****  2.    Rahel Abera                                    ETS1081/13               ****\n";
+    cout << "****  3.    Samrawit Eshetu                                ETS0076/13               ****\n";
+    cout << "****  4.    Simret Belete                                  ETS0076/13               ****\n";
+    cout << "****  5.    Tamirat Areda                                  ETS0076/13               ****\n";
     cout << "****                                                                                ****\n";
     cout << "****  \"Alone we can do so little; together we can do so much.\" : Our Motive         ****\n";
     cout << "****  \"Knowledge is your operating system.\"                                         ****\n";

@@ -101,7 +101,7 @@ menustart:
     cout << "\t\t\t5. Search Record-------------(Modified Feature)\n";
     cout << "\t\t\t6. Rank of students\n";
     cout << "\t\t\t7. Statistics \n";
-    // cout << "\t\t\t8. Generate CSV file-----------(New Feature) \n";
+    cout << "\t\t\t8. Generate CSV file-----------(New Feature) \n";
     cout << "\t\t\t9. To see about course details\n";
     cout << "\t\t\t10. About Us \n";
     cout << "\t\t\t11.Contact Us \n";
@@ -417,33 +417,33 @@ void dataDisp()
     }
 }
 
-// void generateCSV() {
-//     fstream InFile;
-//     InFile.open("student.txt", ios::in);
-//     fstream OutFile;
-//     OutFile.open("students.csv", ios::out);
+void generateCSV() {
+    fstream InFile;
+    InFile.open("student.txt", ios::in);
+    fstream OutFile;
+    OutFile.open("students.csv", ios::out);
 
-//     if (!InFile) {
-//         cout << "!Sorry, the file could not be opened....";
-//     } else {
-//         OutFile << "NAME,ID,SEX,AGE,ADDRESS,GRADE,STATUS(pass/fail)" << endl; // Writing CSV header
+    if (!InFile) {
+        cout << "!Sorry, the file could not be opened....";
+    } else {
+        OutFile << "NAME,ID,SEX,AGE,ADDRESS,GRADE,STATUS(pass/fail)" << endl; // Writing CSV header
 
-//         string line, temp1, temp2, temp3, temp4, temp5, temp6;
-//         while (getline(InFile, line)) {
-//             stringstream ss(line);
-//             getline(ss, temp1, ',');
-//             getline(ss, temp2, ',');
-//             getline(ss, temp3, ',');
-//             getline(ss, temp4, ',');
-//             getline(ss, temp5, ',');
-//             getline(ss, temp6, ',');
+        string line, temp1, temp2, temp3, temp4, temp5, temp6;
+        while (getline(InFile, line)) {
+            stringstream ss(line);
+            getline(ss, temp1, ',');
+            getline(ss, temp2, ',');
+            getline(ss, temp3, ',');
+            getline(ss, temp4, ',');
+            getline(ss, temp5, ',');
+            getline(ss, temp6, ',');
 
-//             OutFile << temp1 << "," << temp2 << "," << temp3 << "," << temp4 << "," << temp5 << "," << temp6 << endl;
-//         }
-//         InFile.close();
-//         OutFile.close();
-//     }
-// }
+            OutFile << temp1 << "," << temp2 << "," << temp3 << "," << temp4 << "," << temp5 << "," << temp6 << endl;
+        }
+        InFile.close();
+        OutFile.close();
+    }
+}
 
 void Delete(Student stud)
 {
